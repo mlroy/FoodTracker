@@ -102,6 +102,7 @@ class MealViewController: UIViewController, UITextFieldDelegate,
         meal = Meal(name: name, photo: photo, rating: rating)
     }
     
+    
     //MARK: Actions
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // Hide the keyboard

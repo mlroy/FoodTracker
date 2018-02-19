@@ -85,7 +85,19 @@ class MealViewController: UIViewController, UITextFieldDelegate,
     
     //MARK: Navigation
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways
+        let isPresentingInAddMealMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddMealMode {
+            dismiss(animated: true, completion: nil)
+        }
+        // The let statement safely unwraps the navigationController
+        else if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        }
+        else {
+            fatalError("The MealViewController is not inside a navigation controller.")
+        }
     }
     
     // This method lets you configure a view controller before it's presented.

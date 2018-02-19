@@ -135,7 +135,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="mealNameTextBox" destination="No3-zO-HP8" id="EST-nX-awK"/>
+                        <outlet property="nameTextField" destination="No3-zO-HP8" id="EST-nX-awK"/>
                         <outlet property="photoImageView" destination="8HD-x9-LgR" id="YXA-TP-1xL"/>
                         <outlet property="ratingControl" destination="vIM-82-D1z" id="ZId-gN-PmP"/>
                         <outlet property="saveButton" destination="Rwx-hy-NGa" id="F2e-IF-zKZ"/>

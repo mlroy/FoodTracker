@@ -12,7 +12,7 @@ import os.log
 class MealViewController: UIViewController, UITextFieldDelegate,
                       UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //MARK: properties
-    @IBOutlet weak var mealNameTextBox: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
     @IBOutlet weak var saveButton: UIBarButtonItem!
@@ -26,7 +26,15 @@ class MealViewController: UIViewController, UITextFieldDelegate,
         super.viewDidLoad()
         
         // Handle the text field's user input through delegate callbacks.
-        mealNameTextBox.delegate = self
+        nameTextField.delegate = self
+
+        // Set up views if editin an existing Meal.
+        if let meal = meal {
+            navigationItem.title = meal.name
+            nameTextField.text = meal.name
+            photoImageView.image = meal.photo
+            ratingControl.rating = meal.rating
+        }
         
         // Enable the Save button only if the text field has a valid Meal name
         updateSaveButtonState()
@@ -52,7 +60,7 @@ class MealViewController: UIViewController, UITextFieldDelegate,
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         updateSaveButtonState()
-        navigationItem.title = mealNameTextBox.text
+        navigationItem.title = nameTextField.text
     }
     
     //MARK: UIImagePickerControllerDelegate
@@ -93,8 +101,7 @@ class MealViewController: UIViewController, UITextFieldDelegate,
         /* ?? is the nil coalescing operator. Returns the value of an optional if the optional has a value
          * or a default value otherwise.
          */
-        // Note - webpage was wrong. It had nameTextField instead of mealNameTextBox
-        let name = mealNameTextBox.text ?? ""
+        let name = nameTextField.text ?? ""
         let photo = photoImageView.image
         let rating = ratingControl.rating
     
@@ -106,7 +113,7 @@ class MealViewController: UIViewController, UITextFieldDelegate,
     //MARK: Actions
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
         // Hide the keyboard
-        mealNameTextBox.resignFirstResponder()
+        nameTextField.resignFirstResponder()
         
         // UIImagePickerController is a view controller that lets a user pick media from their photo library.
         let imagePickerController = UIImagePickerController()
@@ -123,7 +130,7 @@ class MealViewController: UIViewController, UITextFieldDelegate,
     //MARK: Private Methods
     private func updateSaveButtonState() {
         // Disable the Save button if the text fields is empty.
-        let text = mealNameTextBox.text ?? ""
+        let text = nameTextField.text ?? ""
         saveButton.isEnabled = !text.isEmpty
     }
 }
